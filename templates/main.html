@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Main menu</h2>
+      <div id="menumsg">
+		Hello, {{ me.name }}  ({{ me.uid }}, {{ me.role }})
+	  </div>
+	<br><br>
+
+	<a href="/users/manage">Manage Users</a><br><br>
+	<a href="/rooms/manage">Manage Rooms</a><br><br>
+	<a href="/reservations/manage">Manage Reservations</a><br><br><br>
+	<a href="/dashboard">Dashboard Analytics</a><br><br><br>
+
+	<a href="/logout">Logout</a><br>
+	
+	
+{% endblock %}

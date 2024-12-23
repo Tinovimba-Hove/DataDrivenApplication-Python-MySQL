@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HC Hotel</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        h2 {
+            text-align: left;
+            color: #4CAF50;
+        }
+
+        h3 {
+            text-align: left;
+            color: #4CAF50;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            padding: 10px 20px;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            float: left;
+        }
+
+        .navbar a:hover {
+            background-color: #575757;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        .chart {
+            margin: 20px 0;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart h3 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/main">Main Menu</a>
+        <a href="/contact">Contact Us</a>
+    </div>
+
+    <div class="container">
+        <h1>HC Hotel</h1>
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <div class="footer">
+        &copy; 2024 HC Hotel. All rights reserved.
+    </div>
+</body>
+</html>

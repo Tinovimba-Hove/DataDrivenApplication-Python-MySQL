@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Hotel Room Analytics Dashboard</h1>
+
+<!-- Average Room Prices -->
+<div id="avg_price_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var avgPriceData = [{
+        x: {{ obj.chart_avg_price.x|tojson }},
+        y: {{ obj.chart_avg_price.y|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(0, 128, 255, 0.7)' }
+    }];
+    var layout1 = { title: 'Average Room Price by Room Type' };
+    Plotly.newPlot('avg_price_chart', avgPriceData, layout1);
+</script>
+
+<!-- Room Status Distribution -->
+<div id="status_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var statusData = [{
+        x: {{ obj.room_status_counts.status|tojson }},
+        y: {{ obj.room_status_counts.count|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(255, 99, 132, 0.7)' }
+    }];
+    var layout2 = { title: 'Room Availability Status Breakdown' };
+    Plotly.newPlot('status_chart', statusData, layout2);
+</script>
+
+
+<!-- Availability Rate Graph -->
+<div id="availability_rate_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var availabilityData = [{
+        x: {{ obj.availability_rate_data.room_type|tojson }},
+        y: {{ obj.availability_rate_data.availability_rate|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(128,0,128,0.7)' }
+    }];
+    var layout4 = { title: 'Availability Rate by Room Type' };
+    Plotly.newPlot('availability_rate_chart', availabilityData, layout4);
+</script>
+
+    <a href="/dashboard">Back to Dashboard</a><br>
+
+{% endblock %}

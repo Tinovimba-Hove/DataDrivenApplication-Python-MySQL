@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <h2>Manage Your Reward</h2>    
+            <br><br>
+            <div class="error_text" >
+                {% if obj.errors|length > 0 %}
+                    {% for error in obj.errors  %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <form action="/rewards_redeemed/manage?pkval={{ obj.data[0].transaction_id }}&action=update" method="POST">
+
+                    <label for="reward_code">Select Reward:</label>
+                    <select name="reward_code" id="reward_code">
+                        {% for reward in obj.rewards_claimed %}
+                            <option value="{{ reward.value }}">{{ reward.text }}</option>
+                        {% endfor %}
+                    </select>
+                    <br><br><br>
+
+                    Redeem Date:<br>
+                    <input type="date" name="redeem_date" value="{{ obj.data[0].redeem_date | format_date('%Y-%m-%d') }}" />
+                    <br><br><br>
+
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+            <div>
+                <br><br>
+                <a href="/rewards_redeemed/manage?pkval={{ obj.data[0].transaction_id }}&action=delete">Delete</a>
+            </div>
+{% endblock %}

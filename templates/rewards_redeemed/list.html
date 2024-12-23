@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <h2>Rewards Redeemed</h2>
+            <br><br>
+            <div>
+                
+
+                <div> <a href="manage?pkval=new">Create new</a> </div>
+                <br><br>
+                {% for obj in objs.data  %}
+					<div> <a href="manage?pkval={{ obj.transaction_id }}">{{ obj.transaction_id }}</a> {{ obj.description }} </div>
+				{% endfor %}
+            </div>
+{% endblock %}

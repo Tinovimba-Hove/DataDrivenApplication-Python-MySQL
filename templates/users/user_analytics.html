@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Hotel Users Analytics Dashboard</h1><br>
+
+<!-- Role Distribution -->
+<div id="role_distribution_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var roleData = [{
+        x: {{ obj.role_counts.role|tojson }},
+        y: {{ obj.role_counts.total_users|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(0, 128, 255, 0.7)' }
+    }];
+    var layout1 = { title: 'Role Distribution (Admin vs Customers)' };
+    Plotly.newPlot('role_distribution_chart', roleData, layout1);
+</script>
+
+<!-- Membership Statistics -->
+<div id="membership_distribution_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var membershipData = [{
+        x: {{ obj.membership_counts.membership_type|tojson }},
+        y: {{ obj.membership_counts.members_count|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(255, 165, 0, 0.7)' }
+    }];
+    var layout2 = { title: 'Membership Type Distribution' };
+    Plotly.newPlot('membership_distribution_chart', membershipData, layout2);
+</script>
+
+<!-- Discount Rates Comparison -->
+<div id="discount_rates_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var discountData = [{
+        x: {{ obj.discount_rates.membership_type|tojson }},
+        y: {{ obj.discount_rates.avg_discount|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(128, 0, 128, 0.7)' }
+    }];
+    var layout3 = { title: 'Discount Rates by Membership Type' };
+    Plotly.newPlot('discount_rates_chart', discountData, layout3);
+</script>
+
+<!-- Points Data Comparison -->
+<div id="points_summary_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var pointsData = [
+        {
+            x: ['Total Gained', 'Total Used', 'Points Available'],
+            y: [{{ obj.points_summary.total_points_gained|tojson }},
+                {{ obj.points_summary.total_points_used|tojson }},
+                {{ obj.points_summary.total_points_available|tojson }}],
+            type: 'bar',
+            marker: { color: 'rgba(0, 128, 0, 0.7)' }
+        }
+    ];
+    var layout4 = { title: 'Customer Points Summary' };
+    Plotly.newPlot('points_summary_chart', pointsData, layout4);
+</script>
+
+<!-- Perks Visualization -->
+<div id="perks_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var perksData = [
+        {
+            x: ['Free Water', 'Free WiFi'],
+            y: [{{ obj.perks_summary.free_water|tojson }}, {{ obj.perks_summary.free_wifi|tojson }}],
+            type: 'bar',
+            marker: { color: 'rgba(255, 0, 0, 0.7)' }
+        }
+    ];
+    var layout5 = { title: 'Free Perks Comparison' };
+    Plotly.newPlot('perks_chart', perksData, layout5);
+</script>
+
+    <a href="/dashboard">Back to Dashboard</a><br>
+
+{% endblock %}

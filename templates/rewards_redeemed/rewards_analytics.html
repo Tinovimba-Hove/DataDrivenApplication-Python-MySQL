@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Hotel Rewards Analytics Dashboard</h1><br>
+
+<!-- Total Rewards Redeemed -->
+<div id="rewards_redeemed_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var rewardsRedeemedData = [{
+        x: {{ obj.chart_rewards_redeemed.x|tojson }},
+        y: {{ obj.chart_rewards_redeemed.y|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(0, 128, 255, 0.7)' }
+    }];
+    var layout1 = { title: 'Total Rewards Redeemed by Type' };
+    Plotly.newPlot('rewards_redeemed_chart', rewardsRedeemedData, layout1);
+</script>
+
+
+<!-- Monthly Redemption Trends -->
+<div id="monthly_redemption_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var monthlyRedemptionData = [{
+        x: {{ obj.monthly_redemption_trends.x|tojson }},
+        y: {{ obj.monthly_redemption_trends.y|tojson }},
+        type: 'line',
+        marker: { color: 'rgba(255, 99, 132, 0.7)' }
+    }];
+    var layout3 = { title: 'Monthly Redemption Trends' };
+    Plotly.newPlot('monthly_redemption_chart', monthlyRedemptionData, layout3);
+</script>
+
+<!-- Redemption Distribution by User -->
+<div id="user_redemption_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var userRedemptionData = [{
+        x: {{ obj.user_redemption_data.uid|tojson }},
+        y: {{ obj.user_redemption_data.total_redemptions|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(128,0,128,0.7)' }
+    }];
+    var layout4 = { title: 'Redemption Distribution by User' };
+    Plotly.newPlot('user_redemption_chart', userRedemptionData, layout4);
+</script>
+
+<!-- Redemption Patterns for Top Rewards -->
+{% for reward_description, data in obj.top_reward_patterns.items() %}
+<div id="reward_pattern_chart_{{ loop.index }}" style="height: 400px;"></div>
+<script type="text/javascript">
+    var rewardPatternData = [{
+        x: {{ data.x|tojson }},
+        y: {{ data.y|tojson }},
+        type: 'line',
+        marker: { color: 'rgba(255, 165, 0, 0.7)' }
+    }];
+    var layout{{ loop.index }} = { title: 'Redemption Patterns for {{ reward_description }}' };
+    Plotly.newPlot('reward_pattern_chart_{{ loop.index }}', rewardPatternData, layout{{ loop.index }});
+</script>
+{% endfor %}
+
+    <a href="/dashboard">Back to Dashboard</a><br>
+ 
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> Hotel Reservations Dashboard</h1><br>
+
+<!-- Reservations by Payment Method -->
+<div id="payment_method_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var paymentMethodData = [{
+        x: {{ obj.chart_payment_method.x|tojson }},
+        y: {{ obj.chart_payment_method.y|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(0, 128, 255, 0.7)' }
+    }];
+    var layout1 = { title: 'Reservations by Payment Method' };
+    Plotly.newPlot('payment_method_chart', paymentMethodData, layout1);
+</script>
+
+<!-- Reservations by Amount Ranges -->
+<div id="amount_ranges_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var amountRangesData = [{
+        x: {{ obj.chart_amount_ranges.x|tojson }},
+        y: {{ obj.chart_amount_ranges.y|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(255, 99, 132, 0.7)' }
+    }];
+    var layout2 = { title: 'Reservations by Amount Ranges' };
+    Plotly.newPlot('amount_ranges_chart', amountRangesData, layout2);
+</script>
+
+<!-- Daily Reservation Trends -->
+<div id="daily_trends_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var dailyTrendsData = [{
+        x: {{ obj.chart_daily_trends.x|tojson }},
+        y: {{ obj.chart_daily_trends.y|tojson }},
+        type: 'scatter',
+        mode: 'lines+markers',
+        marker: { color: 'rgba(0, 255, 128, 0.7)' }
+    }];
+    var layout3 = { title: 'Daily Reservation Trends' };
+    Plotly.newPlot('daily_trends_chart', dailyTrendsData, layout3);
+</script>
+
+<!-- Points Gained by Users -->
+<div id="user_points_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var userPointsData = [{
+        x: {{ obj.chart_user_points_gained.x|tojson }},
+        y: {{ obj.chart_user_points_gained.y|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(128, 0, 255, 0.7)' }
+    }];
+    var layout4 = { title: 'Points Gained by Users' };
+    Plotly.newPlot('user_points_chart', userPointsData, layout4);
+</script>
+
+<!-- Room Reservations -->
+<div id="room_reservations_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var roomReservationsData = [{
+        x: {{ obj.chart_room_reservations.x|tojson }},
+        y: {{ obj.chart_room_reservations.y|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(255, 165, 0, 0.7)' }
+    }];
+    var layout5 = { title: 'Room Reservations Count by Room ID' };
+    Plotly.newPlot('room_reservations_chart', roomReservationsData, layout5);
+</script>
+
+<!-- Average Spending by Payment Method -->
+<div id="avg_spending_chart" style="height: 400px;"></div>
+<script type="text/javascript">
+    var avgSpendingData = [{
+        x: {{ obj.chart_avg_spending.x|tojson }},
+        y: {{ obj.chart_avg_spending.y|tojson }},
+        type: 'bar',
+        marker: { color: 'rgba(0, 128, 128, 0.7)' }
+    }];
+    var layout6 = { title: 'Average Spending by Payment Method' };
+    Plotly.newPlot('avg_spending_chart', avgSpendingData, layout6);
+</script><br>
+
+
+    <a href="/dashboard">Back to Dashboard</a><br>
+
+{% endblock %}

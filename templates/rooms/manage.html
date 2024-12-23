@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <h2>Manage A Room</h2>
+            <br>
+            <div class="error_text" >
+                {% if obj.errors|length > 0 %}
+                    {% for error in obj.errors  %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <form action="/rooms/manage?pkval={{ obj.data[0].room_id }}&action=update" method="POST">
+                    Room Number:<br>
+                    <input type="text" name="room_num" value="{{ obj.data[0].room_num }}" />
+                    <br><br>
+
+                    Status:<br>
+                    <select name="status">
+                        {% for status in obj.status %}
+                            {% if obj.data[0].status == status.value %}
+                                <option selected="true" value="{{ status.value }}">{{ status.text }}</option>
+                            {% else %}
+                                <option value="{{ status.value }}">{{ status.text }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <br>
+
+                    Room Type:<br>
+                    <select name="room_type" onchange="updateRoomDetails(this.value)">
+                        {% for room in obj.room_types %}
+                            {% if obj.data[0].room_type == room.value %}
+                                <option selected="true" value="{{ room.value }}">{{ room.text }}</option>
+                            {% else %}
+                                <option value="{{ room.value }}">{{ room.text }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <br><br>
+
+                    Price:<br>
+                    <input type="text" name="price" value="{{ obj.data[0].price }}" readonly />
+                    <br><br>
+
+                    Description:<br>
+                    <input type="text" name="description" value="{{ obj.data[0].description }}" readonly />
+                    <br> 
+                    <br>
+                    <br>
+                    <input type="submit" value="Submit" />
+                </form>
+                
+            </div>
+
+            <script>
+            // Combined function to update both price and description based on room type
+            function updateRoomDetails(roomType) {
+                updatePrice(roomType);
+                updateDescription(roomType);
+            }
+
+            function updatePrice(roomType) {
+                var price = 0;
+                if (roomType === 'Standard') {
+                    price = 100;
+                } else if (roomType === 'Exclusive') {
+                    price = 175;
+                }
+                document.querySelector('input[name="price"]').value = price;
+            }
+
+            function updateDescription(roomType) {
+                var description = '';
+                if (roomType === 'Standard') {
+                    description = 'Standard: Two Beds';
+                } else if (roomType === 'Exclusive') {
+                    description = 'Luxury Suite';
+                }
+                document.querySelector('input[name="description"]').value = description;
+            }
+
+            // Ensure both price and description are updated on page load
+            window.onload = function() {
+                var roomType = document.querySelector('select[name="room_type"]').value;
+                updateRoomDetails(roomType);
+            };
+            </script>
+
+            <div>
+                <br><br>
+                <a href="/rooms/manage?pkval={{ obj.data[0].room_id }}&action=delete">Delete</a>
+            </div>
+{% endblock %}

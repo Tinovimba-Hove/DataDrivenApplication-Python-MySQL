@@ -1,0 +1,11 @@
+db:
+  host: 'myhost.com'
+  user: 'myUsername'
+  passwd: 'mtPassword'
+  db: 'myDB'
+  port: 3306
+tables:
+  user: 'hotel_users'
+  room: 'hotel_rooms'
+  reservation: 'hotel_reservations'
+  rewards_redeemed: 'hotel_rewards_redeemed'

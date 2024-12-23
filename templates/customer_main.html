@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Main menu</h2>
+      <div id="menumsg">
+		Hello, {{ me.name }}<br>
+    Points Available: {{ points_available }}
+	  </div>
+	<br><br>
+
+    <a href="/reservations/manage">Manage Reservations</a><br><br>
+    <a href="/rewards_redeemed/manage">Manage Rewards</a><br><br><br>
+    <a href="/logout">Logout</a><br>
+	
+{% endblock %}

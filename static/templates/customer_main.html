@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Main menu</h1>
+      <div id="menumsg">
+		Hello, {{ me.name }}  ({{ me.email }})
+	  </div>
+	<br><br>
+	<a href="#">View Users</a><br>
+    <a href="/logout">Logout</a><br>
+	
+{% endblock %}

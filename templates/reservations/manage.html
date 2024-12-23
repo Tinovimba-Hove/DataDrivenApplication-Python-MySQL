@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <h2>Manage A Reservation</h2>
+            <br>
+            <div class="error_text" >
+                {% if obj.errors|length > 0 %}
+                    {% for error in obj.errors  %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <form action="/reservations/manage?pkval={{ obj.data[0].res_id }}&action=update" method="POST">
+                    {% if session['user']['role'] == 'customer' %}
+                        <input type="hidden" name="uid" value="{{ obj.data[0].uid }}" />
+                    {% else %}
+                        Guest:<br>
+                        <select name="uid">
+                            {% for guest in obj.guests.data %}
+                                {% if obj.data[0].uid == guest.uid %}
+                                    <option selected="true" value="{{ guest.uid }}">{{ guest.name }} ({{ guest.role }})</option>
+                                {% else %}
+                                    <option value="{{ guest.uid }}">{{ guest.name }} ({{ guest.role }})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <br><br>
+                    {% endif %}
+                    
+                    Reserved Room:<br>
+                    <select name="room_id">
+                        {% for room in obj.rooms.data %}
+                            <option value="{{ room.room_id }}" {% if obj.data[0].room_id == room.room_id %}selected="true"{% endif %}>
+                                {{ room.room_num }} ({{ room.room_type }})</option>                        
+                        {% endfor %}
+                    </select>
+                    <br><br>
+
+            
+                    Check In Date:<br>
+                    <input type="date" name="check_in_date" value="{{ obj.data[0].check_in_date | format_date('%Y-%m-%d') }}" />
+                    <br><br>
+            
+                    Check Out Date:<br>
+                    <input type="date" name="check_out_date" value="{{ obj.data[0].check_out_date | format_date('%Y-%m-%d') }}" />
+                    <br><br>
+            
+                    Payment Method:<br>
+                    <select name="payment_method">
+                        {% for method in obj.payment_methods %}
+                            {% if obj.data[0].payment_method == method.value %}
+                                <option selected="true" value="{{ method.value }}">{{ method.text }}</option>
+                            {% else %}
+                                <option value="{{ method.value }}">{{ method.text }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <br><br>
+            
+                    Payment Date:<br>
+                    <input type="date" name="payment_date" value="{{ obj.data[0].payment_date | format_date('%Y-%m-%d') }}" />
+                    <br><br><br>
+                    
+                    {% if obj.data and obj.data[0].amount %}
+                    <div>
+                        <h3>Reservation Summary</h3>
+                        <p><strong>Total Amount Paid: $</strong>{{ obj.data[0].amount }}</p>
+                        <p><strong>Points Gained: </strong>{{ obj.data[0].points_gained }}</p>
+                    </div>
+                    {% endif %}
+                    <br><br>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+            <div>
+                <br><br>
+                <a href="/reservations/manage?pkval={{ obj.data[0].res_id }}&action=delete">Delete</a>
+            </div>
+{% endblock %}
